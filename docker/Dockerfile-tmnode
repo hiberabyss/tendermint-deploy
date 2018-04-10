@@ -1,0 +1,5 @@
+FROM tendermint/tendermint:latest
+
+ADD ./tmnode_server /usr/bin/
+
+# vim:ft=dockerfile:
