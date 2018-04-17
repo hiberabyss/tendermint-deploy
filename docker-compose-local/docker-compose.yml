@@ -2,7 +2,7 @@ version: '2.0'
 
 services:
 
-  tm_node1:
+  tm_node1: &node
     image: tendermint/tendermint
     container_name: tm_node1
     hostname: tm_node1
@@ -11,15 +11,31 @@ services:
       - '46667:46657'
     volumes:
       - ./node1_data:/tendermint
-    entrypoint: ["bash", "-c", "tendermint node --p2p.persistent_peers=d902b83f46131a80a82df2198a704889c5833284@tm_node2:46656 --moniker=`hostname` --proxy_app=kvstore --consensus.create_empty_blocks=false"]
+    entrypoint: ["bash", "-c", "tendermint node --p2p.persistent_peers=a4a76f1f411d656e0061e60bd834c254cf5acee8@tm_node1:46656,48eb0bd1e9cc5acd75a9eb30d9922c0f31756da8@tm_node2:46656,eb1341b79b9b9b82175a9da739c4cfcb9cfd7dd0@tm_node3:46656,df077e49b46905271078d9d85df292cd630ccb7f@tm_node4:46656 --moniker=`hostname` --proxy_app=persistent_kvstore --consensus.create_empty_blocks=false"]
 
   tm_node2:
-    image: tendermint/tendermint
+    <<: *node
     container_name: tm_node2
     hostname: tm_node2
-    tty: true
     ports:
       - '46668:46657'
     volumes:
       - ./node2_data:/tendermint
-    entrypoint: ["bash", "-c", "tendermint node --p2p.persistent_peers=59ef92d5c6a408a59e4a1d599a8aff0d4ef37785@tm_node1:46656 --moniker=`hostname` --proxy_app=kvstore --consensus.create_empty_blocks=false"]
+
+  tm_node3:
+    <<: *node
+    container_name: tm_node3
+    hostname: tm_node3
+    ports:
+      - '46669:46657'
+    volumes:
+      - ./node3_data:/tendermint
+
+  tm_node4:
+    <<: *node
+    container_name: tm_node4
+    hostname: tm_node4
+    ports:
+      - '46660:46657'
+    volumes:
+      - ./node4_data:/tendermint
