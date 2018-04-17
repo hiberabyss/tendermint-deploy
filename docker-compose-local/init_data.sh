@@ -8,6 +8,7 @@
 rm -rf *data
 
 node_cnt=4
+tendermint_img="tendermint/tendermint:0.17.1"
 
 init() {
     SED=sed
@@ -31,8 +32,8 @@ init
 default_genesis="./node1_data/config/genesis.json"
 
 for (( i = 1; i <= $node_cnt; i++ )); do
-    docker run --rm -v `pwd`/node${i}_data:/tendermint tendermint/tendermint init
-    node_id=$(docker run --rm -v `pwd`/node${i}_data:/tendermint tendermint/tendermint show_node_id)
+    docker run --rm -v `pwd`/node${i}_data:/tendermint $tendermint_img init
+    node_id=$(docker run --rm -v `pwd`/node${i}_data:/tendermint $tendermint_img show_node_id)
     echo "Node$i ID: $node_id"
     $SED -i "s/[0-9a-f]\{40\}@tm_node$i/$node_id@tm_node$i/g" ./docker-compose.yml
 
