@@ -9,10 +9,24 @@ rm -rf *data
 
 node_cnt=4
 
-SED=sed
-if [[ "$OSTYPE" =~ ^darwin ]]; then
-    SED=gsed
-fi
+init() {
+    SED=sed
+    if [[ "$OSTYPE" =~ ^darwin ]]; then
+        SED=gsed
+        if ! which gsed &> /dev/zero ; then
+            brew install gnu-sed
+        fi
+
+        if ! which jq &> /dev/zero; then
+            brew install jq
+        fi
+    else
+        if ! which jq &> /dev/zero; then
+            sudo apt-get install jq -y
+        fi
+    fi
+}
+init
 
 default_genesis="./node1_data/config/genesis.json"
 
