@@ -58,6 +58,8 @@ for (( i = 1; i <= $node_cnt; i++ )); do
     if [[ $i != 1 ]]; then
         echo $(cat $default_genesis | jq ".validators |= .+ $(cat node${i}_data/config/genesis.json | jq '.validators')") > $default_genesis
     fi
+
+    echo $(cat $default_genesis | jq ".validators[$i-1].name = \"tm_node$i\" ") > $default_genesis
 done
 
 for (( i = 2; i <= $node_cnt; i++ )); do
