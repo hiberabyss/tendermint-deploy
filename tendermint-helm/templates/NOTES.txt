@@ -1,0 +1,3 @@
+Start Tendermin Cluster with {{ .Values.tendermint.nodeCnt }} nodes.
+
+Could enter node via `kubectl exec tm-2 bash -it -c tm`

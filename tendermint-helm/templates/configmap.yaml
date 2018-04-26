@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tm-config
+data:
+  seeds: "{{ .Values.tendermint.nodeCnt }}"
+  validators: "{{ .Values.tendermint.nodeCnt }}"
+  validator.power: "{{ .Values.tendermint.initVotingPower }}"
+  genesis.json: |-
+    {
+      "genesis_time": "2018-04-05T23:17:31.164Z",
+      "chain_id": "chain-B5XXm5",
+      "validators": [],
+      "app_hash": ""
+    }

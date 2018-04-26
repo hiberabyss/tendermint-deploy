@@ -1,0 +1,11 @@
+# Default values for tendermint.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+tendermint:
+  nodeCnt: 5
+  initVotingPower: 10
+
+image:
+  tmImage: hbliu/tendermint:latest
+  abciImage: hbliu/tm-abci:latest
