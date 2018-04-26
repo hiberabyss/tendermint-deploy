@@ -1,0 +1,25 @@
+# host: node1
+http://localhost:46669
+page = 1
+--
+
+# Make transaction
+--
+GET /broadcast_tx_commit?tx="name=hbliu"
+--
+GET /block?height=:page
+
+--
+GET /dump_consensus_state
+
+--
+GET /status
+
+GET /genesis
+--
+
+http://localhost:9092
+GET /reputations
+
+http://localhost:46668
+GET /status

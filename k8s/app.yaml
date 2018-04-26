@@ -21,8 +21,8 @@ kind: ConfigMap
 metadata:
   name: tm-config
 data:
-  seeds: "tm-0,tm-1"
-  validators: "tm-0,tm-1"
+  seeds: "20"
+  validators: "20"
   validator.power: "10"
   genesis.json: |-
     {
@@ -38,7 +38,7 @@ metadata:
   name: tm
 spec:
   serviceName: kvstore
-  replicas: 2
+  replicas: 20
   template:
     metadata:
       labels:
@@ -98,11 +98,13 @@ spec:
           cp /etc/tendermint/genesis.json /tendermint/genesis.json
 
           # fill genesis file with validators
-          IFS=',' read -ra VALS_ARR <<< "$VALIDATORS"
+          # IFS=',' read -ra VALS_ARR <<< "$VALIDATORS"
           fqdn_suffix=$(hostname -f | sed 's#[^.]*\.\(\)#\1#')
-          for v in "${VALS_ARR[@]}"; do
+          # for v in "${VALS_ARR[@]}"; do
+          for ((i = 0; i < VALIDATORS; i++ )); do
             # wait until validator generates priv/pub key pair
             set +e
+            v="tm-$i"
 
             curl -s --fail "http://$v.$fqdn_suffix:8080/pub_key" > /dev/null
             ERR=$?
@@ -120,9 +122,11 @@ spec:
           done
 
           # construct seeds
-          IFS=',' read -ra SEEDS_ARR <<< "$SEEDS"
-          seeds=()
-          for s in "${SEEDS_ARR[@]}"; do
+          # IFS=',' read -ra SEEDS_ARR <<< "$SEEDS"
+          # seeds=()
+          # for s in "${SEEDS_ARR[@]}"; do
+          for ((i = 0; i < SEEDS; i++)); do
+            s="tm-$i"
             seed_id=$(curl -s "http://$s.$fqdn_suffix:8080/node_id")
             seeds+=("$seed_id@$s.$fqdn_suffix:46656")
           done

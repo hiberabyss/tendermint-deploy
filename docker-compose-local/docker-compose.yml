@@ -11,7 +11,7 @@ services:
       - '46667:46657'
     volumes:
       - ./node1_data:/tendermint
-    entrypoint: ["sh", "-c", "tendermint node --p2p.persistent_peers=b83e8f6874ff363923b6b9121f0a6a8fcccea400@tm_node1:46656,9cd2c4f150e3af14a18b3c3ddb8add1fdefed842@tm_node2:46656,69d5488b3173e5371cd877b01d7c7928ca743228@tm_node3:46656,d31e2fde399a87ce14fcd8c479c1d63b4a981388@tm_node4:46656 --moniker=`hostname` --proxy_app=persistent_kvstore --consensus.create_empty_blocks=false"]
+    entrypoint: ["sh", "-c", "tendermint node --p2p.persistent_peers=f6e4c91a17c79b4805592603204ada8895196205@tm_node1:46656,f6859a0b40dfd2d21ae7b0f9a5796e7b62ac4ca4@tm_node2:46656,0fab048217e63e240b7eade1ed642906660bb0fa@tm_node3:46656,ccc8005a4e2a4022e79b84c946aa05b4e056a9b0@tm_node4:46656 --moniker=`hostname` --proxy_app=persistent_kvstore --consensus.create_empty_blocks=false"]
 
   tm_node2:
     <<: *node
