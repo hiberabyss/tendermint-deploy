@@ -3,7 +3,7 @@ version: '2.0'
 services:
 
   tm_node1: &node
-    image: tendermint/tendermint:0.17.1
+    image: hbliu/tendermint
     container_name: tm_node1
     hostname: tm_node1
     tty: true
@@ -11,7 +11,7 @@ services:
       - '46667:46657'
     volumes:
       - ./node1_data:/tendermint
-    entrypoint: ["sh", "-c", "tendermint node --p2p.persistent_peers=f6e4c91a17c79b4805592603204ada8895196205@tm_node1:46656,f6859a0b40dfd2d21ae7b0f9a5796e7b62ac4ca4@tm_node2:46656,0fab048217e63e240b7eade1ed642906660bb0fa@tm_node3:46656,ccc8005a4e2a4022e79b84c946aa05b4e056a9b0@tm_node4:46656 --moniker=`hostname` --proxy_app=persistent_kvstore --consensus.create_empty_blocks=false"]
+    entrypoint: ["sh", "-c", "tendermint node --p2p.persistent_peers=@tm_node1:46656,dcf8f04ab68899a48734ea172aca2feb87bdc8b0@tm_node2:46656,d27226a4d85cbc9b8adc6b22abca9fb584c01bf4@tm_node3:46656,e9669e33be591631536b8bdf9b044a0b383fcb77@tm_node4:46656 --moniker=`hostname` --proxy_app=persistent_kvstore --consensus.create_empty_blocks=false"]
 
   tm_node2:
     <<: *node

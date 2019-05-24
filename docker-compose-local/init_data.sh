@@ -6,7 +6,7 @@
 # CreatTime: 2018-04-09 17:34:35 EDT
 
 node_cnt=4
-tendermint_img="tendermint/tendermint:0.17.1"
+tendermint_img="hbliu/tendermint"
 
 is_osx () {
     [[ "$OSTYPE" =~ ^darwin ]] || return 1
